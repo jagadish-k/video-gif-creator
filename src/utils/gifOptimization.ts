@@ -103,7 +103,7 @@ const snapToCommonWidth = (width: number): number => {
   }
 
   // If smaller than smallest common width, return as is
-  return Math.max(200, width);
+  return Math.max(64, width);
 };
 
 /**

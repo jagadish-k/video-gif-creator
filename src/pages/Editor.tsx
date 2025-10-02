@@ -274,7 +274,7 @@ export const Editor = () => {
                         <input
                           type="range"
                           value={settings.width}
-                          min={metadata ? Math.min(200, metadata.width) : 200}
+                          min={64}
                           max={metadata ? metadata.width : 1920}
                           step="10"
                           className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-blue-600"
