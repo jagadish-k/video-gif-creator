@@ -184,8 +184,17 @@ export const Editor = () => {
                     <span className="ml-2 font-medium">{metadata.duration.toFixed(2)}s</span>
                   </div>
                   <div>
-                    <span className="text-gray-600">Dimensions:</span>
+                    <span className="text-gray-600">Resolution:</span>
                     <span className="ml-2 font-medium">{metadata.width}x{metadata.height}</span>
+                  </div>
+                  <div>
+                    <span className="text-gray-600">Quality:</span>
+                    <span className="ml-2 font-medium">
+                      {metadata.width >= 1920 ? '1080p+' :
+                       metadata.width >= 1280 ? '720p' :
+                       metadata.width >= 854 ? '480p' :
+                       metadata.width >= 640 ? '360p' : '< 360p'}
+                    </span>
                   </div>
                   <div>
                     <span className="text-gray-600">File Size:</span>
