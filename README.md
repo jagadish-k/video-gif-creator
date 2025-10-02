@@ -1,6 +1,20 @@
 # GIF Maker
 
+> 🤖 **Built with [Claude Code](https://claude.com/claude-code)** - This entire application was developed through an AI-assisted coding session, showcasing the power of collaborative development between human creativity and AI capabilities.
+
 A modern, browser-based video to GIF converter built with React, TypeScript, and FFmpeg.wasm. Convert videos to GIFs entirely in your browser - no uploads, completely private.
+
+## 🎯 About This Project
+
+This project demonstrates what's possible when combining human vision with AI-assisted development. Using Claude Code, we built a full-featured video-to-GIF converter in a single focused development session, including:
+
+- Complete project scaffolding from specifications
+- Responsive UI with TailwindCSS v4
+- Client-side video processing with FFmpeg.wasm
+- Smart GIF optimization algorithms
+- Automated GitHub Pages deployment
+
+The development process emphasized iterative refinement, with the AI understanding requirements, implementing solutions, and adapting based on real-time feedback - showcasing modern AI-assisted software development.
 
 ## ✨ Features
 
@@ -155,8 +169,35 @@ This project is licensed under the ISC License.
 - Some browsers may have memory limitations for very large files
 - Safari may require additional permissions for file access
 
+## 🤖 Development Story
+
+This application was built entirely with [Claude Code](https://claude.com/claude-code), Anthropic's AI coding assistant. The development showcased:
+
+**What was built:**
+- Full-stack React TypeScript application
+- Responsive UI (mobile-first to desktop)
+- Client-side video processing with WebAssembly
+- Smart file size optimization
+- Automated CI/CD pipeline
+
+**How it was built:**
+- Started from a specification document
+- Iterative problem-solving (TailwindCSS v4 migration, FFmpeg CORS issues, responsive layout challenges)
+- Real-time debugging and optimization
+- Human feedback driving AI implementation
+
+**Key achievements:**
+- ~6,000+ lines of code
+- 30+ files created
+- Multiple architectural decisions documented
+- Complete deployment pipeline
+- Built in a single focused session
+
+This project demonstrates the potential of AI-assisted development - not replacing developers, but amplifying their capabilities through intelligent collaboration.
+
 ## 🙏 Acknowledgments
 
+- [Claude Code](https://claude.com/claude-code) - AI-assisted development
 - [FFmpeg.wasm](https://github.com/ffmpegwasm/ffmpeg.wasm) - WebAssembly port of FFmpeg
 - [TailwindCSS](https://tailwindcss.com/) - Utility-first CSS framework
 - [Vite](https://vitejs.dev/) - Next generation frontend tooling
