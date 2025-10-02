@@ -26,10 +26,23 @@ export const useVideoMetadata = (videoFile: File | null) => {
           video.src = URL.createObjectURL(videoFile);
         });
 
+        // Try to extract FPS from video (not always available in browser)
+        let fps: number | undefined;
+        try {
+          // Request animation frame to estimate FPS (approximation)
+          const videoAny = video as any;
+          if (videoAny.mozDecodedFrames !== undefined && videoAny.mozPresentedFrames !== undefined) {
+            fps = Math.round((videoAny.mozPresentedFrames || 0) / video.duration);
+          }
+        } catch (err) {
+          // FPS extraction not available in this browser
+        }
+
         const metadata: VideoMetadata = {
           duration: video.duration,
           width: video.videoWidth,
           height: video.videoHeight,
+          fps,
           size: videoFile.size,
           fileName: videoFile.name,
           fileType: videoFile.type,

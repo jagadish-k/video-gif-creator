@@ -197,6 +197,10 @@ export const Editor = () => {
                     </span>
                   </div>
                   <div>
+                    <span className="text-gray-600">FPS:</span>
+                    <span className="ml-2 font-medium">{metadata.fps || 'N/A'}</span>
+                  </div>
+                  <div>
                     <span className="text-gray-600">File Size:</span>
                     <span className="ml-2 font-medium">{formatFileSize(metadata.size)}</span>
                   </div>
