@@ -64,19 +64,33 @@ npm run deploy    # Deploy to GitHub Pages
 
 ## 🌐 Deployment
 
-### GitHub Pages
+### GitHub Pages (Automated with GitHub Actions)
+
+**Setup (one-time):**
 
 1. Update `base` in `vite.config.ts` to match your repository name:
    ```ts
    base: '/your-repo-name/'
    ```
 
-2. Deploy:
+2. Push to GitHub:
    ```bash
-   npm run deploy
+   git remote add origin https://github.com/yourusername/video-gif-creator.git
+   git push -u origin main
    ```
 
-3. Enable GitHub Pages in your repository settings (source: gh-pages branch)
+3. Enable GitHub Pages in repository settings:
+   - Go to **Settings** → **Pages**
+   - Under **Source**, select **GitHub Actions**
+   - The workflow will automatically deploy on push to main
+
+**Manual Deployment (alternative):**
+
+```bash
+npm run deploy  # Deploys to gh-pages branch
+```
+
+Then set GitHub Pages source to `gh-pages` branch in settings.
 
 ## 📁 Project Structure
 
