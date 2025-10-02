@@ -2,6 +2,19 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## Development History
+
+**Built with Claude Code (Anthropic's AI coding assistant)**
+
+- **Development Time:** ~90 minutes (October 2, 2025, 21:37 - 23:07)
+- **Total Commits:** 9 well-documented commits
+- **Lines of Code:** ~6,000+
+- **AI Tokens Consumed:** ~60,000 tokens
+- **User Instructions:** ~15 iterative refinements
+- **Files Created:** 30+
+
+This project demonstrates effective human-AI collaboration in software development, achieving in 1.5 hours what traditionally might take days.
+
 ## Project Overview
 
 A React TypeScript SPA for converting video files to GIFs entirely in the browser using ffmpeg.wasm. Deployable to GitHub Pages with no backend required.
