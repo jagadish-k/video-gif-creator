@@ -8,6 +8,7 @@ import { useVideoMetadata } from '../hooks/useVideoMetadata';
 import { GifSettings, TimeRange } from '../types';
 import { formatFileSize } from '../utils/fileValidation';
 import { getQualityScale, convertVideoToGif } from '../utils/videoProcessing';
+import { calculateOptimalSettings, getEstimatedFileSizeLabel, willExceedTargetSize } from '../utils/gifOptimization';
 
 export const Editor = () => {
   const location = useLocation();
@@ -43,14 +44,30 @@ export const Editor = () => {
 
   useEffect(() => {
     if (metadata) {
-      setTimeRange({ start: 0, end: Math.min(metadata.duration, 5) });
+      const initialTimeRange = { start: 0, end: Math.min(metadata.duration, 5) };
+      setTimeRange(initialTimeRange);
+
+      // Calculate optimal settings for <1MB target
+      const optimalSettings = calculateOptimalSettings(metadata, initialTimeRange);
+
       setSettings(prev => ({
         ...prev,
-        width: getQualityScale(prev.quality),
-        height: Math.round((metadata.height / metadata.width) * getQualityScale(prev.quality)),
+        ...optimalSettings,
       }));
     }
   }, [metadata]);
+
+  // Recalculate optimal settings when time range changes
+  useEffect(() => {
+    if (metadata && timeRange) {
+      const optimalSettings = calculateOptimalSettings(metadata, timeRange);
+
+      setSettings(prev => ({
+        ...prev,
+        ...optimalSettings,
+      }));
+    }
+  }, [timeRange, metadata]);
 
   const handleSettingsChange = (key: keyof GifSettings, value: any) => {
     setSettings(prev => {
@@ -270,6 +287,33 @@ export const Editor = () => {
                       </div>
                     </div>
                   </div>
+
+                  {/* Estimated File Size Indicator */}
+                  {metadata && (
+                    <div className={`p-3 rounded-lg border ${
+                      willExceedTargetSize(settings, timeRange.end - timeRange.start)
+                        ? 'bg-yellow-50 border-yellow-200'
+                        : 'bg-green-50 border-green-200'
+                    }`}>
+                      <div className="flex items-center justify-between">
+                        <span className="text-sm font-medium text-gray-700">
+                          Estimated size:
+                        </span>
+                        <span className={`text-sm font-semibold ${
+                          willExceedTargetSize(settings, timeRange.end - timeRange.start)
+                            ? 'text-yellow-700'
+                            : 'text-green-700'
+                        }`}>
+                          {getEstimatedFileSizeLabel(settings, timeRange.end - timeRange.start)}
+                        </span>
+                      </div>
+                      {willExceedTargetSize(settings, timeRange.end - timeRange.start) && (
+                        <p className="text-xs text-yellow-600 mt-1">
+                          May exceed 1MB target. Consider reducing duration, FPS, or size.
+                        </p>
+                      )}
+                    </div>
+                  )}
 
                   <button
                     onClick={handleGenerate}
