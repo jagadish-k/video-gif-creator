@@ -29,7 +29,8 @@ export const estimateGifSize = (
 
 /**
  * Calculates optimal GIF settings to stay under 1MB (with 5% grace)
- * Priority: duration > fps > width
+ * Priority: Maximize quality while staying under target
+ * Strategy: Start with best settings, only reduce if necessary
  */
 export const calculateOptimalSettings = (
   metadata: VideoMetadata,
@@ -38,41 +39,41 @@ export const calculateOptimalSettings = (
   const duration = timeRange.end - timeRange.start;
   const aspectRatio = metadata.height / metadata.width;
 
-  // Start with reasonable defaults
-  let fps = 15; // Good balance
+  // Start with best quality settings
+  let fps = 20; // Higher FPS for smoother animation
   let width = metadata.width;
   let height = Math.round(width * aspectRatio);
 
-  // Calculate initial size estimate
+  // Calculate initial size estimate with best settings
   let estimatedSize = estimateGifSize(width, height, duration, fps);
 
-  // If we're already under target, use original dimensions
+  // If we're already under target with best settings, use them!
   if (estimatedSize <= MAX_TARGET_SIZE) {
     return { fps, width, height, quality: 'high' };
   }
 
-  // Strategy 1: Reduce FPS (10fps is acceptable for most GIFs)
+  // Strategy 1: Try slightly lower FPS first (15fps is still very smooth)
+  fps = 15;
+  estimatedSize = estimateGifSize(width, height, duration, fps);
+
+  if (estimatedSize <= MAX_TARGET_SIZE) {
+    return { fps, width, height, quality: 'high' };
+  }
+
+  // Strategy 2: Scale down resolution while maintaining high FPS
+  // Calculate required scale down factor
+  const scaleFactor = Math.sqrt(MAX_TARGET_SIZE / estimatedSize);
+  width = Math.round(metadata.width * scaleFactor);
+
+  // Snap to common widths for better quality
+  width = snapToCommonWidth(width);
+  height = Math.round(width * aspectRatio);
+
+  estimatedSize = estimateGifSize(width, height, duration, fps);
+
+  // If still too large after scaling, try reducing FPS
   if (estimatedSize > MAX_TARGET_SIZE) {
     fps = 10;
-    estimatedSize = estimateGifSize(width, height, duration, fps);
-  }
-
-  // Strategy 2: Scale down resolution if still too large
-  if (estimatedSize > MAX_TARGET_SIZE) {
-    // Calculate required scale down factor
-    const scaleFactor = Math.sqrt(MAX_TARGET_SIZE / estimatedSize);
-    width = Math.round(metadata.width * scaleFactor);
-
-    // Snap to common widths for better quality
-    width = snapToCommonWidth(width);
-    height = Math.round(width * aspectRatio);
-
-    estimatedSize = estimateGifSize(width, height, duration, fps);
-  }
-
-  // Strategy 3: Further reduce FPS if still too large
-  if (estimatedSize > MAX_TARGET_SIZE && fps > 10) {
-    fps = Math.max(8, Math.round(fps * (MAX_TARGET_SIZE / estimatedSize)));
     estimatedSize = estimateGifSize(width, height, duration, fps);
   }
 

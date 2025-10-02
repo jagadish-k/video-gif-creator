@@ -15,6 +15,16 @@ export const TimeRangeSelector = ({ duration, onChange, initialRange }: TimeRang
   const [endInput, setEndInput] = useState(formatTime(initialRange?.end || Math.min(duration, 5)));
   const [warning, setWarning] = useState<string | null>(null);
 
+  // Update state when initialRange prop changes (e.g., on reset)
+  useEffect(() => {
+    if (initialRange) {
+      setStartTime(initialRange.start);
+      setEndTime(initialRange.end);
+      setStartInput(formatTime(initialRange.start));
+      setEndInput(formatTime(initialRange.end));
+    }
+  }, [initialRange?.start, initialRange?.end]);
+
   useEffect(() => {
     const validation = validateTimeRange(startTime, endTime, duration);
     setWarning(validation.error || null);
