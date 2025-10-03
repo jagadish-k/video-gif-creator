@@ -8,6 +8,12 @@ interface VideoPlayerProps {
   endTime?: number;
 }
 
+// Module-level cache to survive StrictMode re-mounts
+const blobCache = {
+  file: null as File | null,
+  url: null as string | null,
+};
+
 export const VideoPlayer = ({ videoFile, onTimeUpdate, startTime = 0, endTime }: VideoPlayerProps) => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [currentTime, setCurrentTime] = useState(0);
@@ -56,11 +62,28 @@ export const VideoPlayer = ({ videoFile, onTimeUpdate, startTime = 0, endTime }:
   }, [startTime, endTime, playing, onTimeUpdate]);
 
   useEffect(() => {
-    if (videoRef.current && videoFile) {
-      const url = URL.createObjectURL(videoFile);
-      videoRef.current.src = url;
-      return () => URL.revokeObjectURL(url);
+    const video = videoRef.current;
+    if (!video || !videoFile) return;
+
+    // Check if we can reuse cached blob URL
+    if (blobCache.file === videoFile && blobCache.url) {
+      video.src = blobCache.url;
+      return;
     }
+
+    // New file - revoke old cache if exists
+    if (blobCache.url && blobCache.file !== videoFile) {
+      URL.revokeObjectURL(blobCache.url);
+    }
+
+    // Create new blob URL and cache it
+    const url = URL.createObjectURL(videoFile);
+    blobCache.file = videoFile;
+    blobCache.url = url;
+
+    video.src = url;
+
+    // No cleanup here - let the cache persist
   }, [videoFile]);
 
   const handleSeek = (e: React.ChangeEvent<HTMLInputElement>) => {

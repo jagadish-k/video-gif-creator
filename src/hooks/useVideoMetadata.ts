@@ -20,10 +20,12 @@ export const useVideoMetadata = (videoFile: File | null) => {
         const video = document.createElement('video');
         video.preload = 'metadata';
 
+        const metadataBlobUrl = URL.createObjectURL(videoFile);
+
         await new Promise<void>((resolve, reject) => {
           video.onloadedmetadata = () => resolve();
           video.onerror = () => reject(new Error('Failed to load video metadata'));
-          video.src = URL.createObjectURL(videoFile);
+          video.src = metadataBlobUrl;
         });
 
         // Try to extract FPS from video (not always available in browser)
@@ -49,7 +51,7 @@ export const useVideoMetadata = (videoFile: File | null) => {
         };
 
         setMetadata(metadata);
-        URL.revokeObjectURL(video.src);
+        URL.revokeObjectURL(metadataBlobUrl);
       } catch (err) {
         const errorMessage = err instanceof Error ? err.message : 'Failed to extract metadata';
         setError(errorMessage);

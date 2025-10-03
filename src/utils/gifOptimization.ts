@@ -39,12 +39,6 @@ export const calculateOptimalSettings = (
   const duration = timeRange.end - timeRange.start;
   const aspectRatio = metadata.height / metadata.width;
 
-  console.log('🔍 Optimization Input:', {
-    videoDimensions: `${metadata.width}x${metadata.height}`,
-    duration: `${duration}s`,
-    targetSize: `${(MAX_TARGET_SIZE / (1024 * 1024)).toFixed(2)}MB`
-  });
-
   // Start with best quality settings
   let fps = 20; // Higher FPS for smoother animation
   let width = metadata.width;
@@ -52,31 +46,17 @@ export const calculateOptimalSettings = (
 
   // Calculate initial size estimate with best settings
   let estimatedSize = estimateGifSize(width, height, duration, fps);
-  console.log('📊 Step 1: Best quality (20fps, original size)', {
-    dimensions: `${width}x${height}`,
-    fps,
-    estimatedSize: `${(estimatedSize / (1024 * 1024)).toFixed(2)}MB`,
-    underTarget: estimatedSize <= MAX_TARGET_SIZE
-  });
 
   // If we're already under target with best settings, use them!
   if (estimatedSize <= MAX_TARGET_SIZE) {
-    console.log('✅ Using best quality settings!');
     return { fps, width, height, quality: 'high' };
   }
 
   // Strategy 1: Try slightly lower FPS first (15fps is still very smooth)
   fps = 15;
   estimatedSize = estimateGifSize(width, height, duration, fps);
-  console.log('📊 Step 2: Reduce FPS to 15', {
-    dimensions: `${width}x${height}`,
-    fps,
-    estimatedSize: `${(estimatedSize / (1024 * 1024)).toFixed(2)}MB`,
-    underTarget: estimatedSize <= MAX_TARGET_SIZE
-  });
 
   if (estimatedSize <= MAX_TARGET_SIZE) {
-    console.log('✅ Using 15fps with original dimensions!');
     return { fps, width, height, quality: 'high' };
   }
 
@@ -90,24 +70,11 @@ export const calculateOptimalSettings = (
   height = Math.round(width * aspectRatio);
 
   estimatedSize = estimateGifSize(width, height, duration, fps);
-  console.log('📊 Step 3: Scale down resolution', {
-    dimensions: `${width}x${height}`,
-    fps,
-    scaleFactor: scaleFactor.toFixed(2),
-    estimatedSize: `${(estimatedSize / (1024 * 1024)).toFixed(2)}MB`,
-    underTarget: estimatedSize <= MAX_TARGET_SIZE
-  });
 
   // If still too large after scaling, try reducing FPS
   if (estimatedSize > MAX_TARGET_SIZE) {
     fps = 10;
     estimatedSize = estimateGifSize(width, height, duration, fps);
-    console.log('📊 Step 4: Reduce FPS to 10', {
-      dimensions: `${width}x${height}`,
-      fps,
-      estimatedSize: `${(estimatedSize / (1024 * 1024)).toFixed(2)}MB`,
-      underTarget: estimatedSize <= MAX_TARGET_SIZE
-    });
   }
 
   // Determine quality based on final dimensions
@@ -120,7 +87,6 @@ export const calculateOptimalSettings = (
     quality = 'low';
   }
 
-  console.log('✅ Final settings:', { fps, dimensions: `${width}x${height}`, quality });
   return { fps, width, height, quality };
 };
 

@@ -7,13 +7,18 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 **Built with Claude Code (Anthropic's AI coding assistant)**
 
 - **Development Time:** ~90 minutes (October 2, 2025, 21:37 - 23:07)
-- **Total Commits:** 9 well-documented commits
+- **Total Commits:** 10+ well-documented commits
 - **Lines of Code:** ~6,000+
-- **AI Tokens Consumed:** ~60,000 tokens
-- **User Instructions:** ~15 iterative refinements
+- **AI Tokens Consumed:** ~100,000+ tokens
+- **User Instructions:** ~20+ iterative refinements
 - **Files Created:** 30+
 
 This project demonstrates effective human-AI collaboration in software development, achieving in 1.5 hours what traditionally might take days.
+
+**Recent Improvements (October 3, 2025):**
+- Fixed React StrictMode blob URL revocation issues
+- Optimized mobile UI for better responsiveness
+- Improved video player stability and error handling
 
 ## Project Overview
 
@@ -114,6 +119,36 @@ const baseURL = 'https://cdn.jsdelivr.net/npm/@ffmpeg/core@0.12.6/dist/esm';
 - Handle FFmpeg loading failures gracefully
 - Show user-friendly error messages for conversion failures
 - Check browser compatibility for required APIs
+
+### Blob URL Management (Important!)
+
+**VideoPlayer Component Pattern**:
+The VideoPlayer uses a module-level cache to manage blob URLs and prevent React StrictMode issues:
+
+```typescript
+// Module-level cache survives component re-mounts
+const blobCache = {
+  file: null as File | null,
+  url: null as string | null,
+};
+
+// In useEffect:
+// 1. Check if file is cached, reuse blob URL if same
+// 2. Only create new blob URL for new files
+// 3. Revoke old blob URL when file changes
+// 4. No cleanup in useEffect - cache persists across re-mounts
+```
+
+**Why this matters**:
+- React StrictMode double-mounts components in development
+- Without caching, blob URLs get created and immediately revoked
+- Browser tries to load revoked URLs → ERR_FILE_NOT_FOUND errors
+- Module-level cache ensures blob URL survives re-mounts
+
+**Metadata Extraction**:
+- Creates temporary blob URL for metadata extraction
+- Revokes immediately after metadata is loaded
+- Uses separate blob URL from VideoPlayer
 
 ## GitHub Pages Deployment
 

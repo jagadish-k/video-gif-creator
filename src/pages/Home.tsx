@@ -19,71 +19,83 @@ export const Home = () => {
           </div>
 
           {/* Features */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 mb-8 sm:mb-12">
-            <div className="bg-white p-6 rounded-lg shadow-sm">
-              <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
-                <svg
-                  className="w-6 h-6 text-blue-600"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M13 10V3L4 14h7v7l9-11h-7z"
-                  />
-                </svg>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-6 mb-6 sm:mb-12">
+            <div className="bg-white p-3 sm:p-6 rounded-lg shadow-sm">
+              <div className="flex sm:flex-col items-center sm:items-start gap-3 sm:gap-0">
+                <div className="w-10 h-10 sm:w-12 sm:h-12 bg-blue-100 rounded-lg flex items-center justify-center sm:mb-4 flex-shrink-0">
+                  <svg
+                    className="w-5 h-5 sm:w-6 sm:h-6 text-blue-600"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M13 10V3L4 14h7v7l9-11h-7z"
+                    />
+                  </svg>
+                </div>
+                <div>
+                  <h3 className="font-semibold text-gray-900 text-sm sm:text-base sm:mb-2">Fast & Easy</h3>
+                  <p className="text-xs sm:text-sm text-gray-600 hidden sm:block">
+                    Convert videos to GIFs in seconds with just a few clicks
+                  </p>
+                </div>
               </div>
-              <h3 className="font-semibold text-gray-900 mb-2">Fast & Easy</h3>
-              <p className="text-sm text-gray-600">
-                Convert videos to GIFs in seconds with just a few clicks
-              </p>
             </div>
 
-            <div className="bg-white p-6 rounded-lg shadow-sm">
-              <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mb-4">
-                <svg
-                  className="w-6 h-6 text-green-600"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
-                  />
-                </svg>
+            <div className="bg-white p-3 sm:p-6 rounded-lg shadow-sm">
+              <div className="flex sm:flex-col items-center sm:items-start gap-3 sm:gap-0">
+                <div className="w-10 h-10 sm:w-12 sm:h-12 bg-green-100 rounded-lg flex items-center justify-center sm:mb-4 flex-shrink-0">
+                  <svg
+                    className="w-5 h-5 sm:w-6 sm:h-6 text-green-600"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
+                    />
+                  </svg>
+                </div>
+                <div>
+                  <h3 className="font-semibold text-gray-900 text-sm sm:text-base sm:mb-2">100% Private</h3>
+                  <p className="text-xs sm:text-sm text-gray-600 hidden sm:block">
+                    All processing happens in your browser. No server uploads.
+                  </p>
+                </div>
               </div>
-              <h3 className="font-semibold text-gray-900 mb-2">100% Private</h3>
-              <p className="text-sm text-gray-600">
-                All processing happens in your browser. No server uploads.
-              </p>
             </div>
 
-            <div className="bg-white p-6 rounded-lg shadow-sm">
-              <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mb-4">
-                <svg
-                  className="w-6 h-6 text-purple-600"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"
-                  />
-                </svg>
+            <div className="bg-white p-3 sm:p-6 rounded-lg shadow-sm">
+              <div className="flex sm:flex-col items-center sm:items-start gap-3 sm:gap-0">
+                <div className="w-10 h-10 sm:w-12 sm:h-12 bg-purple-100 rounded-lg flex items-center justify-center sm:mb-4 flex-shrink-0">
+                  <svg
+                    className="w-5 h-5 sm:w-6 sm:h-6 text-purple-600"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"
+                    />
+                  </svg>
+                </div>
+                <div>
+                  <h3 className="font-semibold text-gray-900 text-sm sm:text-base sm:mb-2">Customizable</h3>
+                  <p className="text-xs sm:text-sm text-gray-600 hidden sm:block">
+                    Choose time range, quality, frame rate, and dimensions
+                  </p>
+                </div>
               </div>
-              <h3 className="font-semibold text-gray-900 mb-2">Customizable</h3>
-              <p className="text-sm text-gray-600">
-                Choose time range, quality, frame rate, and dimensions
-              </p>
             </div>
           </div>
 
